@@ -1,0 +1,51 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL") // Set this in .env
+}
+
+model User {
+  id        String   @id @default(cuid())
+  role      String   // "WORKER" or "EMPLOYER"
+  phone     String   @unique
+  name      String?
+  trustScore Int     @default(100)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  jobsPosted Job[]
+  timeBlocks TimeBlock[]
+}
+
+model Job {
+  id          String   @id @default(cuid())
+  employerId  String
+  employer    User     @relation(fields: [employerId], references: [id])
+  title       String
+  description String?
+  wage        Int
+  lat         Float?   // Latitude
+  lng         Float?   // Longitude
+  startTime   DateTime
+  endTime     DateTime
+  status      String   @default("OPEN") // OPEN, MATCHED, COMPLETED
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model TimeBlock {
+  id        String   @id @default(cuid())
+  workerId  String
+  worker    User     @relation(fields: [workerId], references: [id])
+  dayOfWeek Int      // 0-6 (Sun-Sat)
+  startTime String   // e.g., "13:00"
+  endTime   String   // e.g., "16:00"
+  lat       Float?
+  lng       Float?
+  radiusKm  Int      @default(5)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
