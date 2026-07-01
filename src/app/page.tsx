@@ -64,9 +64,9 @@ export default function Home() {
   };
 
   const jobs = [
-    { id: 1, title: '스타벅스 강남점 런치 타임', wage: 13000, payType: '시급', time: '오늘 11:30~13:30', tag: '급구', lat: 37.498, lng: 127.028, tasks: '매장 정리 및 음료 제조 보조', schedule: '주 2일, 하루 2시간' },
-    { id: 2, title: '올리브영 물류 정리 보조', wage: 100000, payType: '일급', time: '내일 14:00~16:00', tag: '단순업무', lat: 37.495, lng: 127.025, tasks: '박스 운반 및 매대 진열 보조', schedule: '단기 1일, 총 2시간' },
-    { id: 3, title: '개인 카페 주말 마감', wage: 1200000, payType: '월급', time: '매주 주말 21:00~23:00', tag: '장기', lat: 37.502, lng: 127.030, tasks: '홀 청소 및 쓰레기 분리수거', schedule: '주 2일, 하루 2시간' },
+    { id: 1, title: '스타벅스 강남점 런치 타임', wage: 13000, payType: '시급', time: '오늘 11:30~13:30', tag: '급구', score: 98, lat: 37.498, lng: 127.028, tasks: '매장 정리 및 음료 제조 보조', schedule: '주 2일, 하루 2시간' },
+    { id: 2, title: '올리브영 물류 정리 보조', wage: 100000, payType: '일급', time: '내일 14:00~16:00', tag: '단순업무', score: 91, lat: 37.495, lng: 127.025, tasks: '박스 운반 및 매대 진열 보조', schedule: '단기 1일, 총 2시간' },
+    { id: 3, title: '개인 카페 주말 마감', wage: 1200000, payType: '월급', time: '매주 주말 21:00~23:00', tag: '장기', score: 95, lat: 37.502, lng: 127.030, tasks: '홀 청소 및 쓰레기 분리수거', schedule: '주 2일, 하루 2시간' },
   ];
 
   const workers = [
@@ -193,6 +193,18 @@ export default function Home() {
           </button>
         </div>
 
+        {/* Quick Registration Buttons */}
+        <div className="grid grid-cols-2 gap-4 md:gap-6 mb-12">
+          <Link href="/employer/dashboard" className="bg-gradient-to-br from-blue-600 to-blue-700 text-white rounded-3xl p-6 md:p-8 flex flex-col items-center justify-center gap-3 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all group">
+            <Briefcase className="w-8 h-8 md:w-10 md:h-10 group-hover:scale-110 transition-transform" />
+            <span className="font-black text-sm md:text-lg">단기알바 공고 올리기</span>
+          </Link>
+          <Link href="/profile" className="bg-gradient-to-br from-indigo-600 to-indigo-700 text-white rounded-3xl p-6 md:p-8 flex flex-col items-center justify-center gap-3 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all group">
+            <User className="w-8 h-8 md:w-10 md:h-10 group-hover:scale-110 transition-transform" />
+            <span className="font-black text-sm md:text-lg">내 인재정보 등록하기</span>
+          </Link>
+        </div>
+
         {/* Section 1: Jobs */}
         <div className="mb-12">
           <div className="flex justify-between items-end mb-5">
@@ -206,7 +218,10 @@ export default function Home() {
               <div key={job.id} className="min-w-[320px] md:min-w-[340px] bg-white p-6 rounded-3xl shadow-sm border border-gray-100 snap-center hover:shadow-md hover:-translate-y-1 transition-all cursor-pointer flex flex-col justify-between">
                 <div>
                   <div className="flex justify-between items-start mb-3">
-                    <span className="px-2.5 py-1 bg-blue-50 text-blue-600 text-[11px] font-black rounded-lg inline-block">{job.tag}</span>
+                    <div className="flex items-center gap-1.5">
+                      <span className="px-2.5 py-1 bg-blue-50 text-blue-600 text-[11px] font-black rounded-lg inline-block">{job.tag}</span>
+                      <span className="text-[11px] font-bold text-gray-700 bg-gray-50 px-2 py-1 rounded-md border border-gray-200 flex items-center gap-1"><Star className="w-3 h-3 text-yellow-500" fill="currentColor"/> {job.score}점</span>
+                    </div>
                     {userLocation ? (
                       <span className="text-[11px] font-bold text-gray-500 bg-gray-50 px-2 py-1 rounded-md border border-gray-100 flex items-center gap-1">
                         <MapPin className="w-3 h-3 text-gray-400"/> {getDistance(userLocation.lat, userLocation.lng, job.lat, job.lng)}
@@ -244,7 +259,7 @@ export default function Home() {
             <h2 className="text-xl md:text-2xl font-black text-gray-900 tracking-tight flex items-center gap-2">
               <User className="w-6 h-6 text-indigo-600" /> 1시간도 틈틈이! 대기중인 초단기 인재
             </h2>
-            <Link href="/employer/dashboard" className="text-sm font-bold text-blue-600 hover:underline">공고 올리기</Link>
+            <Link href="/workers" className="text-sm font-bold text-blue-600 hover:underline">전체보기</Link>
           </div>
           <div className="flex gap-4 overflow-x-auto hide-scrollbar pb-4 snap-x">
             {workers.map(worker => (
