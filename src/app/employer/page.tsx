@@ -1,4 +1,5 @@
 import Header from "@/components/Header";
+import { Coffee, Package, Store, Utensils } from 'lucide-react';
 
 export default function EmployerPostPage() {
   return (
@@ -13,10 +14,10 @@ export default function EmployerPostPage() {
         <div className="bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-gray-100 mb-8">
           <h2 className="font-bold text-gray-800 mb-4 text-lg">자주 찾는 알바 템플릿 <span className="text-sm font-normal text-gray-400">(터치하면 자동 입력)</span></h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
-            <button className="p-4 bg-blue-50 border border-blue-200 text-blue-700 font-bold rounded-2xl text-sm shadow-sm hover:bg-blue-100 transition-colors">☕ 카페 청소</button>
-            <button className="p-4 bg-gray-50 border border-gray-200 text-gray-600 font-bold rounded-2xl text-sm hover:bg-gray-100 transition-colors">📦 상하차 보조</button>
-            <button className="p-4 bg-gray-50 border border-gray-200 text-gray-600 font-bold rounded-2xl text-sm hover:bg-gray-100 transition-colors">🏪 편의점 땜빵</button>
-            <button className="p-4 bg-gray-50 border border-gray-200 text-gray-600 font-bold rounded-2xl text-sm hover:bg-gray-100 transition-colors">🍽️ 바쁜시간 서빙</button>
+            <button className="flex items-center justify-center gap-2 p-4 bg-blue-50 border border-blue-200 text-blue-700 font-bold rounded-2xl text-sm shadow-sm hover:bg-blue-100 transition-colors"><Coffee className="w-4 h-4"/> 카페 청소</button>
+            <button className="flex items-center justify-center gap-2 p-4 bg-gray-50 border border-gray-200 text-gray-600 font-bold rounded-2xl text-sm hover:bg-gray-100 transition-colors"><Package className="w-4 h-4"/> 상하차 보조</button>
+            <button className="flex items-center justify-center gap-2 p-4 bg-gray-50 border border-gray-200 text-gray-600 font-bold rounded-2xl text-sm hover:bg-gray-100 transition-colors"><Store className="w-4 h-4"/> 편의점 땜빵</button>
+            <button className="flex items-center justify-center gap-2 p-4 bg-gray-50 border border-gray-200 text-gray-600 font-bold rounded-2xl text-sm hover:bg-gray-100 transition-colors"><Utensils className="w-4 h-4"/> 바쁜시간 서빙</button>
           </div>
 
           <div className="space-y-6">

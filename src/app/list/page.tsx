@@ -1,4 +1,5 @@
 import Header from "@/components/Header";
+import { CalendarDays, Calendar, Clock } from 'lucide-react';
 
 export default function ListPage() {
   const jobs = [
@@ -21,7 +22,7 @@ export default function ListPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             {/* 근무 기간 필터 */}
             <div>
-              <label className="block text-sm font-black text-gray-900 mb-2">📅 근무 기간</label>
+              <label className="block text-sm font-black text-gray-900 mb-2 flex items-center gap-2"><CalendarDays className="w-4 h-4"/> 근무 기간</label>
               <select className="w-full p-3.5 bg-gray-50 border border-gray-200 rounded-2xl text-sm font-bold text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer hover:bg-gray-100 transition-colors">
                 <option>모든 기간</option>
                 <option>하루(1일) 단기</option>
@@ -34,7 +35,7 @@ export default function ListPage() {
             
             {/* 요일 필터 */}
             <div>
-              <label className="block text-sm font-black text-gray-900 mb-2">🗓️ 근무 요일 (다중 선택)</label>
+              <label className="block text-sm font-black text-gray-900 mb-2 flex items-center gap-2"><Calendar className="w-4 h-4"/> 근무 요일 (다중 선택)</label>
               <div className="flex justify-between bg-gray-50 p-2 rounded-2xl border border-gray-200">
                 {['월','화','수','목','금','토','일'].map((day, idx) => (
                   <button key={day} className={`w-9 h-9 md:w-10 md:h-10 rounded-xl text-sm font-black transition-colors ${idx === 5 || idx === 6 ? 'bg-blue-600 text-white shadow-sm' : 'text-gray-500 hover:bg-gray-200'}`}>{day}</button>
@@ -44,7 +45,7 @@ export default function ListPage() {
             
             {/* 세부 시간대 필터 */}
             <div>
-              <label className="block text-sm font-black text-gray-900 mb-2">⏰ 세부 시간대</label>
+              <label className="block text-sm font-black text-gray-900 mb-2 flex items-center gap-2"><Clock className="w-4 h-4"/> 세부 시간대</label>
               <div className="flex items-center gap-2">
                 <select className="flex-1 p-3.5 bg-gray-50 border border-gray-200 rounded-2xl text-sm font-bold text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer hover:bg-gray-100 transition-colors">
                   <option>09:00</option>
