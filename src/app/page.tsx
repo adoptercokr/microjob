@@ -263,33 +263,36 @@ export default function Home() {
           </div>
           <div className="flex gap-4 overflow-x-auto hide-scrollbar pb-4 snap-x">
             {workers.map(worker => (
-              <div key={worker.id} className="min-w-[300px] md:min-w-[320px] bg-white p-6 rounded-3xl shadow-sm border border-gray-100 snap-center hover:border-blue-300 transition-colors cursor-pointer group flex flex-col justify-between">
+              <div key={worker.id} className="min-w-[320px] md:min-w-[340px] bg-white p-6 rounded-3xl shadow-sm border border-gray-100 snap-center hover:shadow-md hover:-translate-y-1 transition-all cursor-pointer flex flex-col justify-between">
                 <div>
-                  <div className="flex items-center gap-4 mb-4">
-                    <div className="w-14 h-14 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-full flex items-center justify-center font-black text-blue-600 text-xl border border-blue-100 group-hover:scale-105 transition-transform flex-shrink-0">
+                  <div className="flex justify-between items-start mb-3">
+                    <div className="flex items-center gap-1.5">
+                      <span className="px-2.5 py-1 bg-indigo-50 text-indigo-600 text-[11px] font-black rounded-lg inline-block">{worker.badge}</span>
+                      <span className="text-[11px] font-bold text-gray-700 bg-gray-50 px-2 py-1 rounded-md border border-gray-200 flex items-center gap-1"><Star className="w-3 h-3 text-yellow-500" fill="currentColor"/> {worker.score}점</span>
+                    </div>
+                    {userLocation ? (
+                      <span className="text-[11px] font-bold text-gray-500 bg-gray-50 px-2 py-1 rounded-md border border-gray-100 flex items-center gap-1">
+                        <MapPin className="w-3 h-3 text-gray-400"/> {getDistance(userLocation.lat, userLocation.lng, worker.lat, worker.lng)}
+                      </span>
+                    ) : null}
+                  </div>
+                  
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-10 h-10 bg-gradient-to-br from-indigo-50 to-blue-50 rounded-full flex items-center justify-center font-black text-indigo-600 text-lg border border-indigo-100 group-hover:scale-105 transition-transform flex-shrink-0">
                       {worker.name[0]}
                     </div>
-                    <div className="flex-1">
-                      <div className="flex justify-between items-start">
-                        <h3 className="font-black text-gray-900 text-lg">{worker.name}</h3>
-                        <span className="font-bold text-gray-800 text-xs px-2 py-0.5 bg-gray-50 border border-gray-200 rounded shadow-sm">{worker.badge}</span>
-                      </div>
-                      <p className="text-xs text-gray-500 font-medium flex items-center gap-1 mt-1">
-                        <MapPin className="w-3 h-3" /> 
-                        {userLocation ? `${getDistance(userLocation.lat, userLocation.lng, worker.lat, worker.lng)} 거리` : '거리 계산중'}
-                      </p>
-                    </div>
+                    <h3 className="font-black text-gray-900 text-lg">{worker.name}</h3>
                   </div>
                   
                   {/* Detailed Worker Info */}
-                  <div className="bg-gray-50/80 rounded-2xl p-4 border border-gray-100 flex flex-col gap-3 mb-2">
+                  <div className="bg-gray-50 rounded-xl p-3 mb-5 border border-gray-100 flex flex-col gap-2">
                     <div className="flex items-start gap-2">
                       <Briefcase className="w-4 h-4 text-indigo-400 mt-0.5 flex-shrink-0" />
-                      <div className="text-xs font-bold text-gray-700">가능 업무: <span className="font-medium text-gray-600">{worker.possibleTasks}</span></div>
+                      <div className="text-xs font-bold text-gray-700">업무: <span className="font-medium text-gray-600">{worker.possibleTasks}</span></div>
                     </div>
                     <div className="flex items-start gap-2">
                       <ThumbsUp className="w-4 h-4 text-blue-400 mt-0.5 flex-shrink-0" />
-                      <div className="text-xs font-bold text-gray-700">성실도/태도: <span className="font-medium text-gray-600">{worker.diligence}, {worker.attitude}</span></div>
+                      <div className="text-xs font-bold text-gray-700">태도: <span className="font-medium text-gray-600">{worker.diligence}, {worker.attitude}</span></div>
                     </div>
                     <div className="flex items-start gap-2">
                       <CheckCircle2 className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
@@ -298,9 +301,8 @@ export default function Home() {
                   </div>
                 </div>
 
-                <div className="flex justify-between items-center border-t border-gray-50 pt-4 mt-2">
-                  <span className="text-xs text-gray-500 font-bold flex items-center gap-1">종합 평가</span>
-                  <span className="font-black text-blue-600 text-lg flex items-center gap-1"><Star className="w-4 h-4 text-yellow-500" fill="currentColor"/> {worker.score}<span className="text-xs text-gray-400 font-normal">점</span></span>
+                <div className="flex justify-end items-center border-t border-gray-50 pt-4 mt-1">
+                  <span className="font-black text-indigo-600 text-sm flex items-center gap-1 group-hover:underline">프로필 상세 보기 <ChevronRight className="w-4 h-4" /></span>
                 </div>
               </div>
             ))}
