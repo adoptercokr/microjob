@@ -2,77 +2,56 @@ import Header from "@/components/Header";
 
 export default function MapPage() {
   return (
-    <main className="h-screen flex flex-col">
+    <main className="h-[100dvh] md:min-h-screen flex flex-col w-full relative">
       <Header title="내 주변 일자리" />
-      
-      {/* Map Area Mockup */}
-      <div className="flex-1 relative bg-gray-200">
-        <div className="absolute inset-0 flex items-center justify-center bg-[url('https://maps.gstatic.com/mapfiles/api-3/images/cb_pano_1x.png')] bg-cover opacity-50">
-          <span className="text-gray-500 font-bold">지도 영역 (카카오맵 API 연동 예정)</span>
-        </div>
-        
-        {/* Mock Radius */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-blue-500/20 border-2 border-blue-500/50 rounded-full animate-pulse"></div>
-        
-        {/* Mock Location Pin (Me) */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-6 h-6 bg-blue-600 rounded-full border-4 border-white shadow-lg"></div>
-
-        {/* Mock Job Pins */}
-        <div className="absolute top-[40%] left-[60%] flex flex-col items-center">
-          <div className="bg-white px-2 py-1 rounded-md shadow-md text-xs font-bold text-gray-800 mb-1">
-            시급 1.3만
+      <div className="flex-1 relative bg-gray-200 w-full h-full overflow-hidden">
+        {/* 네이버 지도 영역 (임시 플레이스홀더) */}
+        <div className="absolute inset-0 bg-gray-300 flex flex-col items-center justify-center relative">
+          <svg className="w-16 h-16 text-gray-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" /></svg>
+          <span className="text-gray-500 font-bold">지도 API 연동 예정</span>
+          
+          {/* 마커 목업 */}
+          <div className="absolute top-1/3 left-1/3 w-14 h-14 bg-white rounded-full shadow-lg border-2 border-blue-500 flex items-center justify-center flex-col animate-bounce cursor-pointer hover:scale-110 transition-transform">
+            <span className="text-[10px] font-black text-blue-600">GS25</span>
+            <span className="text-[9px] font-bold text-gray-500">1.3만</span>
           </div>
-          <div className="w-4 h-4 bg-red-500 rounded-full border-2 border-white shadow-sm"></div>
-        </div>
-
-        <div className="absolute top-[55%] left-[30%] flex flex-col items-center">
-          <div className="bg-white px-2 py-1 rounded-md shadow-md text-xs font-bold text-gray-800 mb-1">
-            시급 1.1만
+          <div className="absolute top-1/2 right-1/4 w-12 h-12 bg-white rounded-full shadow-lg border-2 border-red-500 flex items-center justify-center flex-col cursor-pointer hover:scale-110 transition-transform">
+            <span className="text-[10px] font-black text-red-600">식당</span>
+            <span className="text-[9px] font-bold text-gray-500">1.5만</span>
           </div>
-          <div className="w-4 h-4 bg-orange-500 rounded-full border-2 border-white shadow-sm"></div>
-        </div>
-        
-        {/* Map Controls */}
-        <div className="absolute top-4 right-4 flex flex-col gap-2">
-          <button className="w-10 h-10 bg-white rounded-full shadow-md flex items-center justify-center text-gray-700">
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" /></svg>
-          </button>
-          <button className="w-10 h-10 bg-white rounded-full shadow-md flex items-center justify-center text-blue-600">
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-          </button>
         </div>
       </div>
-
-      {/* Bottom Sheet - Job Detail */}
-      <div className="bg-white rounded-t-3xl shadow-[0_-10px_40px_rgba(0,0,0,0.1)] p-5 pb-24 z-10 relative mt-[-20px]">
-        <div className="w-12 h-1.5 bg-gray-200 rounded-full mx-auto mb-4"></div>
+      
+      {/* Bottom Sheet - Mobile: bottom fixed, PC: Floating Card on left */}
+      <div className="absolute bottom-16 md:bottom-auto md:top-24 md:left-8 w-full md:w-[420px] bg-white rounded-t-3xl md:rounded-3xl shadow-[0_-10px_40px_rgba(0,0,0,0.1)] md:shadow-2xl p-6 z-10 transition-transform pb-safe">
+        <div className="w-12 h-1.5 bg-gray-200 rounded-full mx-auto mb-5 md:hidden"></div>
+        <h2 className="font-black text-gray-900 text-xl mb-4">현재 화면 내 알바 <span className="text-blue-600">2건</span></h2>
         
-        <div className="flex justify-between items-start mb-2">
-          <div>
-            <span className="inline-block px-2 py-1 bg-blue-100 text-blue-700 text-xs font-bold rounded mb-2">매칭률 95%</span>
-            <h3 className="text-xl font-bold text-gray-900">홀서빙 (점심 피크타임)</h3>
-            <p className="text-gray-500 text-sm">스타벅스 강남대로점 • 도보 5분 거리</p>
+        <div className="space-y-3 mb-2 max-h-[40vh] md:max-h-[60vh] overflow-y-auto hide-scrollbar">
+          <div className="p-5 border-2 border-blue-500 bg-blue-50 rounded-2xl shadow-sm cursor-pointer hover:shadow-md transition-shadow">
+            <div className="flex justify-between items-start mb-2">
+              <span className="px-2 py-0.5 bg-blue-100 text-blue-700 text-xs font-black rounded-lg">급구</span>
+              <span className="text-gray-400 text-xs font-bold">100m</span>
+            </div>
+            <h3 className="font-black text-gray-900 mb-1.5 text-lg">GS25 강남대로점 야간물류</h3>
+            <div className="flex justify-between items-end mt-3 border-t border-blue-100 pt-3">
+              <span className="text-xs text-gray-500 font-bold">오늘 23:00~02:00</span>
+              <span className="font-black text-blue-600 text-xl">13,000<span className="text-sm font-bold text-gray-500">원</span></span>
+            </div>
           </div>
-          <div className="text-right">
-            <p className="text-sm text-gray-500">시급</p>
-            <p className="text-2xl font-black text-blue-600">13,000<span className="text-lg">원</span></p>
+          
+          <div className="p-5 border border-gray-200 bg-white rounded-2xl shadow-sm cursor-pointer hover:border-gray-300 hover:shadow-md transition-all">
+            <div className="flex justify-between items-start mb-2">
+              <span className="px-2 py-0.5 bg-red-50 text-red-600 text-xs font-black rounded-lg">초보가능</span>
+              <span className="text-gray-400 text-xs font-bold">350m</span>
+            </div>
+            <h3 className="font-black text-gray-900 mb-1.5 text-lg">본죽 역삼점 저녁 서빙보조</h3>
+            <div className="flex justify-between items-end mt-3 border-t border-gray-100 pt-3">
+              <span className="text-xs text-gray-500 font-bold">오늘 18:00~20:00</span>
+              <span className="font-black text-gray-800 text-xl">15,000<span className="text-sm font-bold text-gray-500">원</span></span>
+            </div>
           </div>
         </div>
-
-        <div className="bg-gray-50 rounded-xl p-4 my-4 flex justify-between items-center">
-          <div>
-            <p className="text-xs text-gray-400 mb-1">근무 요일/시간</p>
-            <p className="font-bold text-gray-800">월, 수 <span className="text-blue-600">13:00 ~ 15:00</span> (총 2시간)</p>
-          </div>
-          <div className="text-right">
-            <p className="text-xs text-gray-400 mb-1">예상 일급</p>
-            <p className="font-bold text-gray-800">26,000원</p>
-          </div>
-        </div>
-
-        <button className="w-full bg-blue-600 text-white font-bold py-4 rounded-xl shadow-md hover:bg-blue-700 transition-colors">
-          수락하고 매칭 확정하기
-        </button>
       </div>
     </main>
   );

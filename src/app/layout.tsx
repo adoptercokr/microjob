@@ -17,9 +17,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body className={`${inter.className} bg-gray-100 text-gray-900`}>
-        <div className="max-w-md mx-auto bg-white min-h-screen relative shadow-xl overflow-x-hidden pb-16">
-          {children}
+      <body className={`${inter.className} bg-gray-50 text-gray-900 pb-16 md:pb-0`}>
+        <div className="w-full min-h-screen relative flex flex-col">
+          {/* Main Content Area (padding top for desktop nav) */}
+          <div className="flex-1 w-full mx-auto pt-0 md:pt-16 pb-safe">
+            {children}
+          </div>
           <BottomNav />
         </div>
       </body>
