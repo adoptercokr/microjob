@@ -75,13 +75,13 @@ export default function Home() {
     { id: 3, name: '김성실', score: 92, badge: '단골마스터', lat: 37.505, lng: 127.035, possibleTasks: '카페마감, 설거지, 청소', diligence: '우수', attitude: '꼼꼼함', commuteRate: '95%' },
   ];
 
-  const getPayIcon = (type: string) => {
+  const getPayBadge = (type: string) => {
     switch(type) {
-      case '시급': return <Clock className="w-3.5 h-3.5 text-blue-500" />;
-      case '일급': return <Coins className="w-3.5 h-3.5 text-orange-500" />;
-      case '월급': return <Wallet className="w-3.5 h-3.5 text-green-500" />;
-      case '연봉': return <Landmark className="w-3.5 h-3.5 text-purple-500" />;
-      default: return <CircleDollarSign className="w-3.5 h-3.5 text-gray-500" />;
+      case '시급': return <span className="flex items-center gap-1 px-2.5 py-1 bg-blue-50 text-blue-700 rounded-lg text-[11px] font-black"><Clock className="w-3.5 h-3.5" /> 시급</span>;
+      case '일급': return <span className="flex items-center gap-1 px-2.5 py-1 bg-orange-50 text-orange-700 rounded-lg text-[11px] font-black"><Coins className="w-3.5 h-3.5" /> 일급</span>;
+      case '월급': return <span className="flex items-center gap-1 px-2.5 py-1 bg-green-50 text-green-700 rounded-lg text-[11px] font-black"><Wallet className="w-3.5 h-3.5" /> 월급</span>;
+      case '연봉': return <span className="flex items-center gap-1 px-2.5 py-1 bg-purple-50 text-purple-700 rounded-lg text-[11px] font-black"><Landmark className="w-3.5 h-3.5" /> 연봉</span>;
+      default: return <span className="flex items-center gap-1 px-2.5 py-1 bg-gray-50 text-gray-700 rounded-lg text-[11px] font-black"><CircleDollarSign className="w-3.5 h-3.5" /> {type}</span>;
     }
   };
 
@@ -229,10 +229,8 @@ export default function Home() {
                   </div>
                 </div>
 
-                <div className="flex justify-between items-end border-t border-gray-50 pt-4">
-                  <span className="text-xs text-gray-500 font-bold flex items-center gap-1">
-                    {getPayIcon(job.payType)} {job.payType}
-                  </span>
+                <div className="flex justify-between items-end border-t border-gray-50 pt-4 mt-1">
+                  {getPayBadge(job.payType)}
                   <span className="font-black text-gray-900 text-2xl">{job.wage.toLocaleString()}<span className="text-sm font-bold text-gray-500 ml-0.5">원</span></span>
                 </div>
               </div>
