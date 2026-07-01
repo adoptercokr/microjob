@@ -1,8 +1,9 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Header from "@/components/Header";
 import Link from "next/link";
-import { Plus, X, CalendarDays, Clock, MapPin, Search, ChevronRight, Briefcase, User, Star, Award, Zap } from 'lucide-react';
+import { Plus, X, CalendarDays, Clock, MapPin, Search, ChevronRight, Briefcase, User, Star, Award, CircleDollarSign, Coins, Landmark, Wallet } from 'lucide-react';
+import { getDistance } from '@/utils/distance';
 
 interface ScheduleCondition {
   id: number;
@@ -16,6 +17,29 @@ export default function Home() {
     { id: 1, days: ['월', '수', '목'], startTime: '14:00', endTime: '19:00' }
   ]);
   const [duration, setDuration] = useState('모든 기간');
+
+  // 사용자 현재 위치 상태
+  const [userLocation, setUserLocation] = useState<{lat: number, lng: number} | null>(null);
+  const [locationError, setLocationError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setUserLocation({
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          });
+        },
+        (error) => {
+          setLocationError('위치 권한 차단됨 (기본값: 강남역)');
+          setUserLocation({ lat: 37.498095, lng: 127.027610 }); // 권한 거부시 강남역 디폴트
+        }
+      );
+    } else {
+      setUserLocation({ lat: 37.498095, lng: 127.027610 });
+    }
+  }, []);
 
   const addCondition = () => {
     setConditions([...conditions, { id: Date.now(), days: [], startTime: '09:00', endTime: '18:00' }]);
@@ -40,16 +64,26 @@ export default function Home() {
   };
 
   const jobs = [
-    { id: 1, title: '스타벅스 강남점 런치 타임', wage: 13000, time: '오늘 11:30~13:30', tag: '급구' },
-    { id: 2, title: '올리브영 물류 정리 보조', wage: 12500, time: '내일 14:00~16:00', tag: '단순업무' },
-    { id: 3, title: '개인 카페 마감 청소', wage: 14000, time: '오늘 21:00~22:30', tag: '초보가능' },
+    { id: 1, title: '스타벅스 강남점 런치 타임', wage: 13000, payType: '시급', time: '오늘 11:30~13:30', tag: '급구', lat: 37.498, lng: 127.028 },
+    { id: 2, title: '올리브영 물류 정리 보조', wage: 100000, payType: '일급', time: '내일 14:00~16:00', tag: '단순업무', lat: 37.495, lng: 127.025 },
+    { id: 3, title: '개인 카페 주말 마감', wage: 1200000, payType: '월급', time: '매주 주말 21:00~23:00', tag: '장기', lat: 37.502, lng: 127.030 },
   ];
 
   const workers = [
-    { id: 1, name: '이스타', score: 98, badge: '시간엄수', distance: '100m' },
-    { id: 2, name: '박알바', score: 95, badge: '깔끔마무리', distance: '300m' },
-    { id: 3, name: '김성실', score: 92, badge: '단골마스터', distance: '500m' },
+    { id: 1, name: '이스타', score: 98, badge: '시간엄수', lat: 37.497, lng: 127.026 },
+    { id: 2, name: '박알바', score: 95, badge: '깔끔마무리', lat: 37.490, lng: 127.020 },
+    { id: 3, name: '김성실', score: 92, badge: '단골마스터', lat: 37.505, lng: 127.035 },
   ];
+
+  const getPayIcon = (type: string) => {
+    switch(type) {
+      case '시급': return <Clock className="w-3.5 h-3.5 text-blue-500" />;
+      case '일급': return <Coins className="w-3.5 h-3.5 text-orange-500" />;
+      case '월급': return <Wallet className="w-3.5 h-3.5 text-green-500" />;
+      case '연봉': return <Landmark className="w-3.5 h-3.5 text-purple-500" />;
+      default: return <CircleDollarSign className="w-3.5 h-3.5 text-gray-500" />;
+    }
+  };
 
   return (
     <main className="min-h-screen bg-gray-50/50 w-full relative pb-24 md:pb-12">
@@ -58,9 +92,20 @@ export default function Home() {
         
         {/* 복합 다중 필터 콘솔 */}
         <div className="bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-gray-200 mb-10">
-          <div className="flex items-center gap-3 mb-6">
-            <Search className="w-6 h-6 text-blue-600" />
-            <h2 className="text-xl md:text-2xl font-black text-gray-900 tracking-tight">맞춤 일정 매칭 콘솔</h2>
+          <div className="flex justify-between items-center mb-6">
+            <div className="flex items-center gap-3">
+              <Search className="w-6 h-6 text-blue-600" />
+              <h2 className="text-xl md:text-2xl font-black text-gray-900 tracking-tight">맞춤 일정 매칭 콘솔</h2>
+            </div>
+            {userLocation ? (
+              <span className="text-xs font-bold text-blue-600 bg-blue-50 px-3 py-1.5 rounded-full flex items-center gap-1">
+                <MapPin className="w-3 h-3" /> 내 위치 적용됨
+              </span>
+            ) : (
+              <span className="text-xs font-bold text-gray-400 bg-gray-50 px-3 py-1.5 rounded-full flex items-center gap-1 animate-pulse">
+                <MapPin className="w-3 h-3" /> GPS 탐색 중...
+              </span>
+            )}
           </div>
 
           <div className="mb-6">
@@ -159,11 +204,20 @@ export default function Home() {
           <div className="flex gap-4 overflow-x-auto hide-scrollbar pb-4 snap-x">
             {jobs.map(job => (
               <div key={job.id} className="min-w-[280px] md:min-w-[320px] bg-white p-6 rounded-3xl shadow-sm border border-gray-100 snap-center hover:shadow-md hover:-translate-y-1 transition-all cursor-pointer">
-                <span className="px-2.5 py-1 bg-blue-50 text-blue-600 text-[11px] font-black rounded-lg mb-3 inline-block">{job.tag}</span>
+                <div className="flex justify-between items-start mb-3">
+                  <span className="px-2.5 py-1 bg-blue-50 text-blue-600 text-[11px] font-black rounded-lg inline-block">{job.tag}</span>
+                  {userLocation ? (
+                    <span className="text-[11px] font-bold text-gray-500 bg-gray-50 px-2 py-1 rounded-md border border-gray-100 flex items-center gap-1">
+                      <MapPin className="w-3 h-3 text-gray-400"/> {getDistance(userLocation.lat, userLocation.lng, job.lat, job.lng)}
+                    </span>
+                  ) : null}
+                </div>
                 <h3 className="font-black text-gray-900 text-lg mb-1">{job.title}</h3>
-                <p className="text-gray-500 text-sm font-medium mb-6 flex items-center gap-1.5"><Clock className="w-4 h-4" /> {job.time}</p>
+                <p className="text-gray-500 text-sm font-medium mb-6 flex items-center gap-1.5"><CalendarDays className="w-4 h-4" /> {job.time}</p>
                 <div className="flex justify-between items-end border-t border-gray-50 pt-4">
-                  <span className="text-xs text-gray-400 font-bold flex items-center gap-1"><Zap className="w-3 h-3 text-yellow-500" /> 예상 시급</span>
+                  <span className="text-xs text-gray-500 font-bold flex items-center gap-1">
+                    {getPayIcon(job.payType)} {job.payType}
+                  </span>
                   <span className="font-black text-gray-900 text-2xl">{job.wage.toLocaleString()}<span className="text-sm font-bold text-gray-500 ml-0.5">원</span></span>
                 </div>
               </div>
@@ -188,7 +242,10 @@ export default function Home() {
                   </div>
                   <div>
                     <h3 className="font-black text-gray-900 text-lg">{worker.name}</h3>
-                    <p className="text-xs text-gray-500 font-medium flex items-center gap-1"><MapPin className="w-3 h-3" /> 반경 {worker.distance}</p>
+                    <p className="text-xs text-gray-500 font-medium flex items-center gap-1">
+                      <MapPin className="w-3 h-3" /> 
+                      {userLocation ? `${getDistance(userLocation.lat, userLocation.lng, worker.lat, worker.lng)} 거리` : '거리 계산중'}
+                    </p>
                   </div>
                 </div>
                 <div className="bg-gray-50/80 rounded-2xl p-4 border border-gray-100 flex flex-col gap-2.5">
