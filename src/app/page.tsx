@@ -53,7 +53,7 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-gray-50/50 w-full relative pb-24 md:pb-12">
-      <Header title="마이크로잡 홈" />
+      <Header title="초단기 마이크로잡 홈" />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-10">
         
         {/* 복합 다중 필터 콘솔 */}
@@ -152,7 +152,7 @@ export default function Home() {
         <div className="mb-12">
           <div className="flex justify-between items-end mb-5">
             <h2 className="text-xl md:text-2xl font-black text-gray-900 tracking-tight flex items-center gap-2">
-              <Briefcase className="w-6 h-6 text-blue-600" /> 우리 동네 급구 알바
+              <Briefcase className="w-6 h-6 text-blue-600" /> 우리 동네 1~2시간 초단기 알바
             </h2>
             <Link href="/list" className="text-sm font-bold text-blue-600 hover:underline">전체보기</Link>
           </div>
@@ -175,7 +175,7 @@ export default function Home() {
         <div className="mb-8">
           <div className="flex justify-between items-end mb-5">
             <h2 className="text-xl md:text-2xl font-black text-gray-900 tracking-tight flex items-center gap-2">
-              <User className="w-6 h-6 text-indigo-600" /> 지금 일할 수 있는 알바생
+              <User className="w-6 h-6 text-indigo-600" /> 1시간도 틈틈이! 대기중인 초단기 인재
             </h2>
             <Link href="/employer/dashboard" className="text-sm font-bold text-blue-600 hover:underline">공고 올리기</Link>
           </div>

@@ -33,7 +33,7 @@ export default function MapComponent() {
 
   return (
     <div style={{ height: '100%', width: '100%', zIndex: 0 }}>
-      <MapContainer center={center} zoom={15} style={{ height: '100%', width: '100%' }} zoomControl={false}>
+      <MapContainer center={center} zoom={15} style={{ height: '100%', width: '100%' }} zoomControl={false} attributionControl={false}>
         <MapController />
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
