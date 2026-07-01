@@ -15,11 +15,59 @@ export default function ListPage() {
       <Header title="단기 알바 찾기" />
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 md:py-8">
-        {/* Filters */}
-        <div className="flex gap-2 mb-6 overflow-x-auto pb-2 hide-scrollbar sticky top-[64px] md:top-[80px] z-30 bg-gray-50/90 backdrop-blur py-2">
-          <button className="whitespace-nowrap px-5 py-2.5 bg-gray-900 text-white text-sm font-bold rounded-full shadow-sm">가까운 순</button>
-          <button className="whitespace-nowrap px-5 py-2.5 bg-white border border-gray-200 text-gray-600 text-sm font-bold rounded-full hover:bg-gray-50 transition-colors">시급 높은 순</button>
-          <button className="whitespace-nowrap px-5 py-2.5 bg-white border border-gray-200 text-gray-600 text-sm font-bold rounded-full hover:bg-gray-50 transition-colors">내 시간대 매칭</button>
+        
+        {/* Advanced Filters */}
+        <div className="bg-white rounded-3xl p-5 md:p-6 shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-gray-100 mb-8 sticky top-[64px] md:top-[80px] z-30">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            {/* 근무 기간 필터 */}
+            <div>
+              <label className="block text-sm font-black text-gray-900 mb-2">📅 근무 기간</label>
+              <select className="w-full p-3.5 bg-gray-50 border border-gray-200 rounded-2xl text-sm font-bold text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer hover:bg-gray-100 transition-colors">
+                <option>모든 기간</option>
+                <option>하루(1일) 단기</option>
+                <option>1주일 이하 초단기</option>
+                <option>1주일 ~ 1개월</option>
+                <option>1개월 ~ 3개월</option>
+                <option>3개월 이상 (장기)</option>
+              </select>
+            </div>
+            
+            {/* 요일 필터 */}
+            <div>
+              <label className="block text-sm font-black text-gray-900 mb-2">🗓️ 근무 요일 (다중 선택)</label>
+              <div className="flex justify-between bg-gray-50 p-2 rounded-2xl border border-gray-200">
+                {['월','화','수','목','금','토','일'].map((day, idx) => (
+                  <button key={day} className={`w-9 h-9 md:w-10 md:h-10 rounded-xl text-sm font-black transition-colors ${idx === 5 || idx === 6 ? 'bg-blue-600 text-white shadow-sm' : 'text-gray-500 hover:bg-gray-200'}`}>{day}</button>
+                ))}
+              </div>
+            </div>
+            
+            {/* 세부 시간대 필터 */}
+            <div>
+              <label className="block text-sm font-black text-gray-900 mb-2">⏰ 세부 시간대</label>
+              <div className="flex items-center gap-2">
+                <select className="flex-1 p-3.5 bg-gray-50 border border-gray-200 rounded-2xl text-sm font-bold text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer hover:bg-gray-100 transition-colors">
+                  <option>09:00</option>
+                  <option>10:00</option>
+                  <option>11:00</option>
+                  <option>12:00</option>
+                  <option>13:00</option>
+                  <option>18:00</option>
+                </select>
+                <span className="text-gray-400 font-black">~</span>
+                <select className="flex-1 p-3.5 bg-gray-50 border border-gray-200 rounded-2xl text-sm font-bold text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer hover:bg-gray-100 transition-colors" defaultValue="18:00">
+                  <option>12:00</option>
+                  <option>15:00</option>
+                  <option>18:00</option>
+                  <option>22:00</option>
+                  <option>02:00</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <button className="w-full mt-6 py-4 bg-gray-900 text-white text-base font-black rounded-2xl shadow-md hover:bg-gray-800 transition-all hover:-translate-y-0.5">
+            위 조건으로 맞춤 알바 검색 (12건)
+          </button>
         </div>
 
         {/* Feed Grid */}

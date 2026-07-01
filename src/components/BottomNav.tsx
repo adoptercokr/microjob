@@ -20,7 +20,7 @@ export default function BottomNav() {
           </Link>
           <Link href="/employer/dashboard" className="flex flex-col items-center justify-center w-full h-full text-gray-500 hover:text-blue-600 transition-colors">
             <svg className="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" /></svg>
-            <span className="text-[10px] font-bold">구인/관리</span>
+            <span className="text-[10px] font-bold">단기알바 구하기</span>
           </Link>
           <Link href="/profile" className="flex flex-col items-center justify-center w-full h-full text-gray-500 hover:text-blue-600 transition-colors">
             <svg className="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
@@ -32,12 +32,12 @@ export default function BottomNav() {
       {/* Desktop Top Nav */}
       <nav className="hidden md:flex fixed top-0 w-full bg-white/90 backdrop-blur-md border-b border-gray-200 z-50 shadow-sm h-16 items-center px-4 lg:px-8">
         <div className="flex-1 flex items-center gap-8 max-w-7xl mx-auto w-full">
-          <Link href="/" className="font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 text-2xl tracking-tight">TimeBlock</Link>
+          <Link href="/" className="font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 text-2xl tracking-tight">Micro Job</Link>
           <div className="flex gap-6 items-center flex-1 ml-4">
             <Link href="/" className="text-sm font-bold text-gray-600 hover:text-blue-600 transition-colors">홈(일정)</Link>
             <Link href="/list" className="text-sm font-bold text-gray-600 hover:text-blue-600 transition-colors">단기알바 찾기</Link>
             <Link href="/map" className="text-sm font-bold text-gray-600 hover:text-blue-600 transition-colors">지도에서 찾기</Link>
-            <Link href="/employer/dashboard" className="text-sm font-bold text-gray-600 hover:text-blue-600 transition-colors">사장님 서비스</Link>
+            <Link href="/employer/dashboard" className="text-sm font-bold text-gray-600 hover:text-blue-600 transition-colors">단기알바 구하기</Link>
             <Link href="/admin" className="text-sm font-bold text-purple-600 hover:text-purple-800 transition-colors">관리자 센터</Link>
           </div>
           <div>
