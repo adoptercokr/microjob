@@ -3,49 +3,37 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL") // Set this in .env
-}
-
-model User {
-  id        String   @id @default(cuid())
-  role      String   // "WORKER" or "EMPLOYER"
-  phone     String   @unique
-  name      String?
-  trustScore Int     @default(100)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  jobsPosted Job[]
-  timeBlocks TimeBlock[]
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
 }
 
 model Job {
-  id          String   @id @default(cuid())
-  employerId  String
-  employer    User     @relation(fields: [employerId], references: [id])
-  title       String
-  description String?
-  wage        Int
-  lat         Float?   // Latitude
-  lng         Float?   // Longitude
-  startTime   DateTime
-  endTime     DateTime
-  status      String   @default("OPEN") // OPEN, MATCHED, COMPLETED
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-}
-
-model TimeBlock {
-  id        String   @id @default(cuid())
-  workerId  String
-  worker    User     @relation(fields: [workerId], references: [id])
-  dayOfWeek Int      // 0-6 (Sun-Sat)
-  startTime String   // e.g., "13:00"
-  endTime   String   // e.g., "16:00"
-  lat       Float?
-  lng       Float?
-  radiusKm  Int      @default(5)
+  id        Int      @id @default(autoincrement())
+  title     String
+  wage      Int
+  payType   String   // 시급, 일급, 월급, 연봉
+  time      String   // 근무 시간 텍스트 (예: '오늘 11:30~13:30')
+  tag       String   // 태그 (예: '급구', '단순업무')
+  score     Int      // 100점 만점 평가 점수
+  lat       Float    // 위도
+  lng       Float    // 경도
+  tasks     String   // 상세 업무 내용
+  schedule  String   // 상세 일정 텍스트
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Worker {
+  id            Int      @id @default(autoincrement())
+  name          String
+  score         Int      // 신뢰 스코어 (100점 만점)
+  badge         String   // 보유 강점 배지 (예: '시간엄수')
+  lat           Float    // 위도
+  lng           Float    // 경도
+  possibleTasks String   // 가능 업무 목록
+  diligence     String   // 성실도
+  attitude      String   // 태도
+  commuteRate   String   // 출퇴근율
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 }

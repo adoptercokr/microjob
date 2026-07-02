@@ -1,57 +1,110 @@
+'use client';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Header from "@/components/Header";
 
-export default function ProfilePage() {
+export default function RegisterProfile() {
+  const router = useRouter();
+  const [formData, setFormData] = useState({
+    name: '',
+    score: '100',
+    badge: '시간엄수',
+    lat: '37.498',
+    lng: '127.028',
+    possibleTasks: '',
+    diligence: '우수',
+    attitude: '친절함',
+    commuteRate: '100%'
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    
+    try {
+      const res = await fetch('/api/workers', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+      if (res.ok) {
+        alert('인재 정보가 성공적으로 등록되었습니다.');
+        router.push('/');
+      } else {
+        alert('인재 정보 등록에 실패했습니다.');
+      }
+    } catch (error) {
+      console.error(error);
+      alert('인재 정보 등록에 실패했습니다.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <main className="min-h-screen bg-gray-50/50 w-full relative">
-      <Header title="내 프로필" />
+      <Header title="내 인재정보 등록하기" />
       
-      <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-12 pb-24 md:pb-12">
-        {/* User Card */}
-        <div className="bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-gray-100 mb-6 flex items-center gap-5">
-          <div className="w-20 h-20 bg-gradient-to-tr from-blue-500 to-indigo-600 rounded-full flex items-center justify-center text-white font-black text-3xl shadow-md">
-            M
-          </div>
-          <div>
-            <h2 className="text-2xl font-black text-gray-900 mb-1">엠제이 대표님</h2>
-            <p className="text-gray-500 text-sm font-medium">서울시 강남구 역삼동</p>
-          </div>
-        </div>
+      <div className="max-w-2xl mx-auto px-4 sm:px-6 py-6 md:py-12 pb-24 md:pb-12">
+        <div className="bg-white rounded-3xl p-6 md:p-8 shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-gray-100">
+          <form onSubmit={handleSubmit} className="space-y-6">
+            
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-black text-gray-900 mb-2">이름 (또는 닉네임)</label>
+                <input required type="text" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} placeholder="예) 이스타" className="w-full p-4 bg-gray-50 border border-gray-200 rounded-2xl text-sm font-bold text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+              </div>
+              <div>
+                <label className="block text-sm font-black text-gray-900 mb-2">보유 강점 (배지)</label>
+                <select value={formData.badge} onChange={e => setFormData({...formData, badge: e.target.value})} className="w-full p-4 bg-gray-50 border border-gray-200 rounded-2xl text-sm font-bold text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                  <option>시간엄수</option>
+                  <option>깔끔마무리</option>
+                  <option>단골마스터</option>
+                  <option>빠른손</option>
+                </select>
+              </div>
+            </div>
 
-        {/* Trust Score */}
-        <div className="bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-gray-100 mb-6">
-          <div className="flex justify-between items-end mb-4">
-            <h3 className="font-bold text-gray-700 flex items-center gap-1.5 text-lg">
-              <span>신뢰 스코어</span>
-              <span className="text-xl">🔥</span>
-            </h3>
-            <span className="font-black text-blue-600 text-4xl tracking-tight">98<span className="text-lg font-bold text-gray-400"> / 100</span></span>
-          </div>
-          <div className="w-full bg-gray-100 rounded-full h-4 mb-3 overflow-hidden shadow-inner">
-            <div className="bg-gradient-to-r from-blue-400 to-blue-600 h-4 rounded-full" style={{ width: '98%' }}></div>
-          </div>
-          <p className="text-sm text-gray-500 font-bold text-right">상위 2% 우수 근로자입니다! 🎉</p>
-        </div>
+            <div>
+              <label className="block text-sm font-black text-gray-900 mb-2">가능 업무 (쉼표로 구분)</label>
+              <input required type="text" value={formData.possibleTasks} onChange={e => setFormData({...formData, possibleTasks: e.target.value})} placeholder="예) 홀서빙, 포장, 단순노무" className="w-full p-4 bg-gray-50 border border-gray-200 rounded-2xl text-sm font-bold text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+            </div>
 
-        {/* Badges */}
-        <h3 className="font-bold text-gray-900 mb-3 px-2 mt-8 text-lg">획득한 뱃지 (나의 강점)</h3>
-        <div className="grid grid-cols-3 gap-3 md:gap-4 mb-10">
-          <div className="bg-white rounded-2xl p-5 flex flex-col items-center justify-center border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
-            <span className="text-4xl mb-3">⏰</span>
-            <span className="text-sm font-bold text-gray-700">시간 엄수</span>
-          </div>
-          <div className="bg-white rounded-2xl p-5 flex flex-col items-center justify-center border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
-            <span className="text-4xl mb-3">🧹</span>
-            <span className="text-sm font-bold text-gray-700">깔끔한 마무리</span>
-          </div>
-          <div className="bg-gray-50 rounded-2xl p-5 flex flex-col items-center justify-center border border-dashed border-gray-200 opacity-60">
-            <span className="text-4xl mb-3 grayscale">🔒</span>
-            <span className="text-sm font-bold text-gray-400">단골 마스터</span>
-          </div>
-        </div>
+            <div className="grid grid-cols-3 gap-4">
+              <div>
+                <label className="block text-sm font-black text-gray-900 mb-2">성실도</label>
+                <select value={formData.diligence} onChange={e => setFormData({...formData, diligence: e.target.value})} className="w-full p-4 bg-gray-50 border border-gray-200 rounded-2xl text-sm font-bold text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                  <option>매우 우수</option>
+                  <option>우수</option>
+                  <option>보통</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-black text-gray-900 mb-2">태도</label>
+                <select value={formData.attitude} onChange={e => setFormData({...formData, attitude: e.target.value})} className="w-full p-4 bg-gray-50 border border-gray-200 rounded-2xl text-sm font-bold text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                  <option>친절함</option>
+                  <option>체력좋음</option>
+                  <option>꼼꼼함</option>
+                  <option>신속함</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-black text-gray-900 mb-2">출퇴근율</label>
+                <select value={formData.commuteRate} onChange={e => setFormData({...formData, commuteRate: e.target.value})} className="w-full p-4 bg-gray-50 border border-gray-200 rounded-2xl text-sm font-bold text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                  <option>100%</option>
+                  <option>98%</option>
+                  <option>95%</option>
+                  <option>90%</option>
+                </select>
+              </div>
+            </div>
 
-        <button className="w-full bg-white border border-gray-200 text-red-500 font-bold text-lg py-4 rounded-2xl shadow-sm hover:bg-red-50 hover:border-red-200 transition-colors">
-          로그아웃
-        </button>
+            <button disabled={isSubmitting} type="submit" className="w-full py-5 bg-indigo-600 text-white text-lg font-black rounded-2xl shadow-md hover:bg-indigo-700 transition-all disabled:opacity-50">
+              {isSubmitting ? '등록 중...' : '내 정보 등록하기'}
+            </button>
+          </form>
+        </div>
       </div>
     </main>
   );
